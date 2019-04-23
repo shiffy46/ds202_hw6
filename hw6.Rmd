@@ -14,17 +14,9 @@ Retrieve Data
 ```{r}
 library(tidyverse)
 Best_in_Show = readxl::read_xlsx('Best_in_Show.xlsx', sheet='Best in show full sheet')
-#Best in Show
-#Best in Show full sheet
-colnames(Best_in_Show) = Best_in_Show[5, ] 
-head(Best_in_Show)
-Best_in_Show = Best_in_Show[7:nrow(Best_in_Show), ]
-names(Best_in_Show) = make.names(names(Best_in_Show))
-names(Best_in_Show)[7] = "Pop.ranking"
-Best_in_Show = Best_in_Show[,!duplicated(names(Best_in_Show))]
+#1(breed),3(type),5(possible data score),6/7(two different Popularity),12(intelligence),26(dataScore),32(Size)
 Best_in_Show_data = Best_in_Show %>% select(c(1,3,5,6,12,32))
 names(Best_in_Show_data) = c("Dog Breed", "Category", "Data Score", "Popularity", "Intelligence", "Size")
 Best_in_Show_data = Best_in_Show_data[4:nrow(Best_in_Show_data),]
 Best_in_Show_data
-#1(breed),3(type),5(possible data score),6/7(two different Popularity),12(intelligence),26(dataScore),32(Size)
 ```
