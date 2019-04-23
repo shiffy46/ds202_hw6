@@ -1,0 +1,17 @@
+---
+title: "Homework_6"
+author: "Sam Shifflett"
+date: "4/23/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+Retrieve Data
+```{r}
+
+
+```
