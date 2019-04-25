@@ -14,23 +14,14 @@ Retrieve Data
 ```{r}
 library(tidyverse)
 Best_in_Show = readxl::read_xlsx('Best_in_Show.xlsx', sheet='Best in show full sheet')
-Best_in_Show
 #1(breed),3(type),5(possible data score),6/7(two different Popularity),12(intelligence),26(dataScore),32(Size)
 Best_in_Show_data = Best_in_Show %>% select(c(1,3,5,6,12,32))
 names(Best_in_Show_data) = c("Dog Breed", "Category", "Data Score", "Popularity", "Intelligence", "Size")
 Best_in_Show_data = Best_in_Show_data[4:nrow(Best_in_Show_data),]
-Best_in_Show_data
 ```
 
 ```{r}
-#intelligence will be upright or down triangle "shape=24,25"
-#color/fill will be the category
-#Size will be the size of the point
-# y will be the popularity
-# x will be the data score
-install.packages("ggrepel")
 library(ggrepel)
-testingDF
 testingDF = Best_in_Show_data
 names(testingDF) = make.names(names(testingDF))
 testingDF = testingDF[complete.cases(testingDF),]
@@ -40,18 +31,11 @@ testingDF = testingDF %>% transform(Intelligence = case_when(
 ))
 testingDF$Data.Score = as.numeric(testingDF$Data.Score)
 testingDF$Popularity = as.numeric(testingDF$Popularity)
-testingDF
-annotations <- data.frame(
-        xpos = c(-Inf,-Inf,Inf,Inf),
-        ypos =  c(-Inf, Inf,-Inf,Inf),
-        annotateText = c("The Rightly Ignored","Inexplicably Overrated"
-                        ,"Overlooked Treasures","Hot Dogs!"),
-        hjustvar = c(0,0,1,1) ,
-        vjustvar = c(0,1,0,1))
-ggplot(testingDF, aes(Data.Score,Popularity, shape = factor(Intelligence), size = fct_rev(factor(Size)), color = Category, label=Dog.Breed)) + geom_point(alpha = 0.75) + geom_vline(xintercept = 2.45) + geom_hline(yintercept = 87 )+ scale_x_continuous(limits=c(0.95, 3.80))+ylim(175,-5) + geom_text_repel(size = 2, segment.size=0.2)
-
+ggplot(testingDF, aes(Data.Score,Popularity, shape = factor(Intelligence), size = fct_rev(factor(Size)), color = Category, label=Dog.Breed)) + geom_point(alpha = 0.75) + geom_vline(xintercept = 2.45) + geom_hline(yintercept = 87 )+ scale_x_continuous(limits=c(0.95, 3.80))+ylim(175,-5) + geom_text_repel(size = 2, segment.size=0.2) + labs(shape="Intelligence", color="Category", size="Size") + annotate("text", label = "Inexplicably Overrated", x = 1.3, y = -5, size = 4) + annotate("text", label = "Hot Dogs!", x = 3.7, y = -5, size = 4) + annotate("text", label = "The Rightly Ignored", x = 1.3, y = 172, size = 4) + annotate("text", label = "Overlooked Treasures", x = 3.4, y = 172, size = 4) + ggtitle("Best in Show: The Ultimate Data Dog") + annotate("text", label = "our data score", x = 1.1, y = 80, size = 4) + annotate("text", label = "Popularity", x = 2.23, y = 175, size = 4) + theme_void()
 
 #Sources
 #https://stackoverflow.com/questions/32123288/position-ggplot-text-in-each-corner
+#https://ggplot2.tidyverse.org/reference/ggtheme.html
+#https://ggplot2.tidyverse.org/reference/geom_text.html
 
 ```
